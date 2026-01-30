@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>SecureMe – Privacy-Focused Password Toolkit</title>
+    <meta
+      name="description"
+      content="Client-side password security toolkit for strength assessment, breach checking, and secure password generation with privacy by design."
+    />
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to main content</a>
+
+    <header class="site-header">
+      <div class="shell">
+        <div class="brand">
+          <span class="brand-mark" aria-hidden="true">◆</span>
+          <div class="brand-text">
+            <p class="brand-name">SecureMe</p>
+            <p class="brand-tagline">Privacy‑first password security lab</p>
+          </div>
+        </div>
+
+        <nav class="site-nav" aria-label="Primary">
+          <button class="nav-link" data-scroll-target="#strength-section">Strength</button>
+          <button class="nav-link" data-scroll-target="#breach-section">Breaches</button>
+          <button class="nav-link" data-scroll-target="#generator-section">Generators</button>
+          <button class="nav-link" data-scroll-target="#learn-section">Learn</button>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main">
+      <section class="hero">
+        <div class="shell hero-grid">
+          <div class="hero-copy">
+            <h1>Understand your passwords without giving them away.</h1>
+            <p class="hero-lead">
+              SecureMe analyzes password strength, checks for known breaches, and
+              generates high‑entropy passwords — entirely in your browser.
+              No accounts. No logging. No passwords sent to a server.
+            </p>
+            <ul class="hero-highlights" aria-label="Key features">
+              <li>Client-side strength analysis with detailed feedback</li>
+              <li>Have I Been Pwned breach checks via k‑anonymity</li>
+              <li>Random & Diceware-style passphrase generators</li>
+              <li>Clear explanations of entropy, leaks, and good practice</li>
+            </ul>
+          </div>
+
+          <aside class="hero-panel" aria-label="Privacy at a glance">
+            <h2 class="hero-panel-title">Privacy by design</h2>
+            <ul class="hero-panel-list">
+              <li>100% password processing stays in your browser</li>
+              <li>No databases, analytics, or tracking cookies</li>
+              <li>Only 5‑character hash prefixes sent to HIBP</li>
+              <li>Built with WCAG‑aware, high‑contrast UI</li>
+            </ul>
+          </aside>
+        </div>
+      </section>
+
+      <section id="strength-section" class="section">
+        <div class="shell section-inner">
+          <header class="section-header">
+            <h2>Password strength lab</h2>
+            <p>
+              Get real‑time feedback powered by entropy estimates and the
+              <code>zxcvbn</code> algorithm. Learn <em>why</em> a password is weak,
+              not just that it is.
+            </p>
+          </header>
+
+          <div class="card-grid">
+            <article class="card card-wide" aria-labelledby="password-input-label">
+              <div class="field">
+                <label id="password-input-label" for="password-input">Test a password</label>
+                <div class="password-input-wrap">
+                  <input
+                    id="password-input"
+                    type="password"
+                    autocomplete="off"
+                    spellcheck="false"
+                    aria-describedby="strength-meter-label strength-summary"
+                  />
+                  <button
+                    type="button"
+                    class="ghost-btn"
+                    id="toggle-password-visibility"
+                    aria-pressed="false"
+                    aria-label="Show password"
+                  >
+                    Show
+                  </button>
+                </div>
+                <p class="field-help">
+                  Processing happens locally in your browser. Passwords are never stored or sent to a server.
+                </p>
+              </div>
+
+              <div class="strength-wrap">
+                <div class="strength-meter-header">
+                  <p id="strength-meter-label" class="strength-label">Strength</p>
+                  <p id="strength-score-label" class="strength-score-label">–</p>
+                </div>
+                <div class="strength-meter" role="img" aria-label="Password strength">
+                  <div class="strength-bar" id="strength-bar"></div>
+                </div>
+                <dl class="strength-meta">
+                  <div>
+                    <dt>Estimated entropy</dt>
+                    <dd id="entropy-value">–</dd>
+                  </div>
+                  <div>
+                    <dt>Estimated crack time</dt>
+                    <dd id="crack-time">–</dd>
+                  </div>
+                </dl>
+                <div class="strength-feedback" id="strength-summary" aria-live="polite">Start typing to see detailed feedback.</div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="breach-section" class="section section-alt">
+        <div class="shell section-inner">
+          <header class="section-header">
+            <h2>Breach checker (Have I Been Pwned)</h2>
+            <p>
+              Check whether a password appears in known data breaches using HIBP’s
+              range API and k‑anonymity. Your full hash and raw password never leave
+              your device.
+            </p>
+          </header>
+
+          <article class="card card-wide" aria-labelledby="breach-input-label">
+            <div class="field">
+              <label id="breach-input-label" for="breach-input">Check a password for breaches</label>
+              <input
+                id="breach-input"
+                type="password"
+                autocomplete="off"
+                spellcheck="false"
+                aria-describedby="breach-help"
+              />
+              <p id="breach-help" class="field-help">
+                The password is hashed locally with SHA‑1. Only the first 5 characters
+                of the hash are sent to the HIBP API.
+              </p>
+            </div>
+
+            <div class="breach-actions">
+              <button type="button" class="primary-btn" id="breach-check-btn">
+                Check breach status
+              </button>
+              <p class="breach-status" id="breach-status" aria-live="polite">
+                Frontend only - functionality not implemented yet.
+              </p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section id="generator-section" class="section">
+        <div class="shell section-inner">
+          <header class="section-header">
+            <h2>Secure password & passphrase generators</h2>
+            <p>
+              Create high‑entropy credentials using the browser’s
+              <code>crypto.getRandomValues()</code>. Choose between dense random
+              passwords or human‑memorable Diceware‑style passphrases.
+            </p>
+          </header>
+
+          <div class="card card-wide">
+            <div class="tabs" role="tablist" aria-label="Generation modes">
+              <button
+                class="tab active"
+                role="tab"
+                aria-selected="true"
+                aria-controls="tab-random"
+                id="tab-random-btn"
+              >
+                Random password
+              </button>
+              <button
+                class="tab"
+                role="tab"
+                aria-selected="false"
+                aria-controls="tab-diceware"
+                id="tab-diceware-btn"
+              >
+                Diceware passphrase
+              </button>
+            </div>
+
+            <div class="tab-panels">
+              <section
+                id="tab-random"
+                class="tab-panel active"
+                role="tabpanel"
+                aria-labelledby="tab-random-btn"
+              >
+                <div class="panel-grid">
+                  <div class="panel-controls">
+                    <div class="field">
+                      <label for="random-length">Length: <span id="random-length-value">16</span> characters</label>
+                      <input
+                        id="random-length"
+                        type="range"
+                        min="8"
+                        max="64"
+                        value="16"
+                      />
+                    </div>
+                    <fieldset class="field field-inline">
+                      <legend>Character sets</legend>
+                      <label>
+                        <input type="checkbox" id="charset-lower" checked />
+                        Lowercase (a–z)
+                      </label>
+                      <label>
+                        <input type="checkbox" id="charset-upper" checked />
+                        Uppercase (A–Z)
+                      </label>
+                      <label>
+                        <input type="checkbox" id="charset-digits" checked />
+                        Digits (0–9)
+                      </label>
+                      <label>
+                        <input type="checkbox" id="charset-symbols" />
+                        Symbols (!@#…)
+                      </label>
+                    </fieldset>
+                    <button type="button" class="primary-btn" id="generate-random-btn">
+                      Generate password
+                    </button>
+                  </div>
+
+                  <div class="panel-output">
+                    <label for="random-output">Generated password</label>
+                    <div class="output-row">
+                      <input
+                        id="random-output"
+                        type="text"
+                        readonly
+                        aria-describedby="random-entropy"
+                      />
+                      <button type="button" class="ghost-btn" id="copy-random-btn">
+                        Copy
+                      </button>
+                    </div>
+                    <p id="random-entropy" class="field-help">
+                      Entropy: <span id="random-entropy-value">–</span> (Frontend only)
+                    </p>
+                  </div>
+                </div>
+              </section>
+
+              <section
+                id="tab-diceware"
+                class="tab-panel"
+                role="tabpanel"
+                aria-labelledby="tab-diceware-btn"
+                hidden
+              >
+                <div class="panel-grid">
+                  <div class="panel-controls">
+                    <div class="field">
+                      <label for="diceware-count">
+                        Number of words:
+                        <span id="diceware-count-value">6</span>
+                      </label>
+                      <input
+                        id="diceware-count"
+                        type="range"
+                        min="4"
+                        max="10"
+                        value="6"
+                      />
+                    </div>
+                    <p class="field-help">
+                      Each Diceware word contributes about 12.9 bits of entropy. Six
+                      words ≈ 77.4 bits — strong enough for most accounts.
+                    </p>
+                    <button type="button" class="primary-btn" id="generate-diceware-btn">
+                      Generate passphrase
+                    </button>
+                  </div>
+
+                  <div class="panel-output">
+                    <label for="diceware-output">Generated passphrase</label>
+                    <div class="output-row">
+                      <input
+                        id="diceware-output"
+                        type="text"
+                        readonly
+                        aria-describedby="diceware-entropy"
+                      />
+                      <button type="button" class="ghost-btn" id="copy-diceware-btn">
+                        Copy
+                      </button>
+                    </div>
+                    <p id="diceware-entropy" class="field-help">
+                      Entropy: <span id="diceware-entropy-value">–</span> (Frontend only)
+                    </p>
+                  </div>
+                </div>
+              </section>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="learn-section" class="section section-alt">
+        <div class="shell section-inner">
+          <header class="section-header">
+            <h2>Learn the “why” behind strong passwords</h2>
+            <p>
+              These concepts come directly from your research: entropy, breach
+              risks, k‑anonymity, and usability‑driven security. Use them to
+              explain your artefact to users, examiners, or study participants.
+            </p>
+          </header>
+
+          <div class="card-grid">
+            <article class="card">
+              <h3>Entropy, not just complexity</h3>
+              <p>
+                Password strength is about unpredictability. Entropy is measured in
+                bits: \(E = L \times \log_2(R)\), where \(L\) is length and \(R\)
+                is the size of the character set. Long passwords or multi‑word
+                passphrases usually beat short “complex” ones.
+              </p>
+            </article>
+
+            <article class="card">
+              <h3>Checking breaches privately</h3>
+              <p>
+                The breach checker uses Have I Been Pwned’s range API. Your
+                password is hashed locally, and only the first 5 characters of the
+                hash are sent. The final comparison happens in your browser.
+              </p>
+            </article>
+
+            <article class="card">
+              <h3>Random vs Diceware</h3>
+              <p>
+                Random passwords pack more entropy per character but are hard to
+                remember. Diceware passphrases trade some density for memorability
+                by combining random words that your brain can recall more easily.
+              </p>
+            </article>
+
+            <article class="card">
+              <h3>Accessibility as a security feature</h3>
+              <p>
+                Clear feedback, readable text, keyboard support, and strong
+                contrast make it easier for everyone to use secure passwords —
+                including people using assistive technologies.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="shell footer-grid">
+        <p>
+          SecureMe is a research artefact demonstrating privacy‑preserving password
+          assessment with client‑side processing and k‑anonymity.
+        </p>
+        <p class="footer-meta">
+          No accounts. No tracking. No password data leaves your browser.
+        </p>
+      </div>
+    </footer>
+  </body>
+</html>
+
