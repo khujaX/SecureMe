@@ -9,6 +9,14 @@
       content="Client-side password security toolkit for strength assessment, breach checking, and secure password generation with privacy by design."
     />
     <link rel="stylesheet" href="style.css" />
+    <!-- Optional: zxcvbn from CDN for realistic strength estimation -->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/zxcvbn/4.4.2/zxcvbn.js"
+      integrity="sha512-rhKX6Ch12yvDqOiiQevyrabfHABOdX96uhHfxLZNV3FlKxLx4hYUFvk6/2uWbhPEapWfe9RWmDoN0mURtEcr6g=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+      defer
+    ></script>
     <script src="script.js" defer></script>
   </head>
   <body>
@@ -119,7 +127,7 @@
                     <dd id="crack-time">–</dd>
                   </div>
                 </dl>
-                <div class="strength-feedback" id="strength-summary" aria-live="polite">Start typing to see detailed feedback.</div>
+                <div class="strength-feedback" id="strength-summary" aria-live="polite"></div>
               </div>
             </article>
           </div>
@@ -158,7 +166,7 @@
                 Check breach status
               </button>
               <p class="breach-status" id="breach-status" aria-live="polite">
-                Frontend only - functionality not implemented yet.
+                Waiting to run a check.
               </p>
             </div>
           </article>
@@ -255,7 +263,7 @@
                       </button>
                     </div>
                     <p id="random-entropy" class="field-help">
-                      Entropy: <span id="random-entropy-value">–</span> (Frontend only)
+                      Entropy: <span id="random-entropy-value">–</span>
                     </p>
                   </div>
                 </div>
@@ -306,7 +314,7 @@
                       </button>
                     </div>
                     <p id="diceware-entropy" class="field-help">
-                      Entropy: <span id="diceware-entropy-value">–</span> (Frontend only)
+                      Entropy: <span id="diceware-entropy-value">–</span>
                     </p>
                   </div>
                 </div>
