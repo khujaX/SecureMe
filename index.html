@@ -9,9 +9,14 @@
       content="Client-side password security toolkit for strength assessment, breach checking, and secure password generation with privacy by design."
     />
     <link rel="stylesheet" href="style.css" />
-    <!-- Optional: zxcvbn from CDN for realistic strength estimation -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/zxcvbn/4.4.2/zxcvbn.js" integrity="sha512-TZlMGFY9xKj38t/5m2FzJ+RM/aD5alMHDe26p0mYUMoCF5G7ibfHUQILq0qQPV3wlsnCwL+TPRNK4vIWGLOkUQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    
+   <meta http-equiv="Content-Security-Policy" content="
+      default-src 'self';
+      script-src 'self' https://cdnjs.cloudflare.com 'unsafe-inline';
+      connect-src 'self' https://cdnjs.cloudflare.com https://api.pwnedpasswords.com;;
+      style-src  'self' 'unsafe-inline';
+      img-src    'self' data:;
+    ">
     <script src="script.js" defer></script>
   </head>
   <body>
