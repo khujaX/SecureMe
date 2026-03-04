@@ -1,4 +1,3 @@
-// SecureMe front-end logic
 // All sensitive processing is done client-side.
 
 const $ = (selector) => document.querySelector(selector);
